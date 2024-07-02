@@ -1,0 +1,56 @@
+---
+title: "Baby_faces_data_analysis"
+format: pdf
+---
+
+```{r}
+library(tidyverse)
+library(dplyr)
+```
+
+```{r}
+data <-read.csv("~/Documents/2024spring/summer_surf/ICIS_data_analysis/data/BabyFaces2018_ICIS2024.csv")
+```
+
+```{r}
+str(data)
+data_cleaned<-data|>
+  filter(PI1CESDRT >= 0 )|>
+  filter(PR1BITSPR >=0)|>
+  filter(PR1BITSCR>= 0)
+```
+
+# problem behaviors
+```{r}
+model1 <- lm(PR1BITSPR~PI1CESDRT, data = data_cleaned)
+summary(model1)
+```
+
+The model’s slope coefficient is 0.16919, and the p-value is 1.67e-15. Since this p-value is smaller than the significance level of 0.05, it indicates that there is significant relationship between parental depression and the problem behaviors in children.
+
+# social competence
+```{r}
+model3 <- lm(PR1BITSCR~PI1CESDRT, data = data_cleaned)
+summary(model3)
+```
+
+The model’s slope coefficient is -0.035, and the p-value is 0.000575. Since this p-value is smaller than the significance level of 0.05, it indicates that there is significant relationship between parental depression and the social competence in children.
+
+# language skills
+
+## comprehensive volcabulary
+
+```{r}
+model4 <- lm(Comprehension.Vocabular~PI1CESDRT, data = data_cleaned)
+summary(model4)
+```
+
+The model’s slope coefficient is -0.2151, and the p-value is 0.0522. Since this p-value is greater than the significance level of 0.05, it indicates that there is no significant relationship between parental depression and the comprehensive vocabulary development in children.
+
+## productive volcabulary
+```{r}
+model5 <- lm(Productive.Vocabulary~PI1CESDRT, data = data_cleaned)
+summary(model5)
+```
+
+The model’s slope coefficient is -0.2084, and the p-value is 0.0267. Since this p-value is smaller than the significance level of 0.05, it indicates that there is significant relationship between parental depression and the productive vocabulary development in children.
