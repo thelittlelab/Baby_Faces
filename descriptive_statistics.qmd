@@ -12,6 +12,8 @@ library(dplyr)
 data <-read.csv("~/Documents/2024spring/summer_surf/ICIS_data_analysis/data/BabyFaces2018_ICIS2024.csv")
 ```
 
+
+The sample size for the full dataset after cleaning the observations which have missing value is 1130
 ```{r}
 data_cleaned <- data %>%
   select("PI1CESDRT", "Comprehension.Vocabular", "Productive.Vocabulary", "PR1BITSPR", 
@@ -28,11 +30,31 @@ summary(data_cleaned)
 
 ```
 
+## standard deviation
+```{r}
+lapply(data_cleaned[, 1:13], sd)
+```
+
 ## group by depression
 0-no depression
 1-depression
-```{r}
 
+the sample size for depression is 12 and the sample size for parents without depression is 1118
+```{r}
 by(data_cleaned, data_cleaned$PI1CESDRM, summary)
 ```
 
+### parents with depression-sd
+```{r}
+data_cleaned_depression <- data_cleaned|>
+  filter(PI1CESDRM == 1)
+lapply(data_cleaned_depression[, 1:13], sd)
+```
+
+
+### parents without depression-sd
+```{r}
+data_cleaned_nodepression <- data_cleaned|>
+  filter(PI1CESDRM == 0)
+lapply(data_cleaned_nodepression[, 1:13], sd)
+```
