@@ -1,0 +1,38 @@
+---
+title: "descriptive_statistics"
+format: pdf
+---
+
+```{r}
+library(tidyverse)
+library(dplyr)
+```
+
+```{r}
+data <-read.csv("~/Documents/2024spring/summer_surf/ICIS_data_analysis/data/BabyFaces2018_ICIS2024.csv")
+```
+
+```{r}
+data_cleaned <- data %>%
+  select("PI1CESDRT", "Comprehension.Vocabular", "Productive.Vocabulary", "PR1BITSPR", 
+         "PR1BITSCR", "PR1HFPIPC", "PR1CPRCL", "PI1FCONF", "PI1CHAOS", "PR1HFPISS", 
+         "PR1PSITS", "PR1PSPCDI", "PI1CESDRM") %>%
+  filter(if_all(everything(), ~ . >= 0))
+  
+```
+
+# descriptive statistics
+## full data
+```{r}
+summary(data_cleaned)
+
+```
+
+## group by depression
+0-no depression
+1-depression
+```{r}
+
+by(data_cleaned, data_cleaned$PI1CESDRM, summary)
+```
+
